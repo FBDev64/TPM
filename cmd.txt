@@ -1,0 +1,5 @@
+EDIT - Edit file
+CLEAR - Clear screen
+HELP - Display this help
+EXIT - Exit the program
+DATE - Current date
