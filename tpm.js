@@ -1,5 +1,8 @@
 // NodeJS Terminal
 
+var cmd=require('node-cmd');
+
+
 const readline = require("readline");
 const fs = require("fs");
 
@@ -8,112 +11,56 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-// TODO : exécuter avec node tpm.js
-
 console.log("Terminal Package Manager");
-console.log("Type help; to display all commands");
+console.log("Type help to display all commands");
 
 rl.on("line", (input) => {
-  if (input === "help;") {
+  if (input === "help") {
     help();
-  } else if (input === "calculator;") {
+  } else if (input === "calculator") {
     calculator();
-  } else if (input === "time;") {
+  } else if (input === "time") {
     time();
-  } else if (input === "PC_shutdown;") {
+  } else if (input === "PC_shutdown") {
     PC_shutdown();
-  } else if (input === "PC_restart;") {
+  } else if (input === "PC_restart") {
     PC_restart();
-  } else if (input === "IP_address;") {
+  } else if (input === "IP_address") {
     IP_address();
-  } else if (input === "ls;") {
+  } else if (input === "ls") {
     ls();
-  } else if (input === "ls -a;") {
+  } else if (input === "ls -a") {
     ls_a();
-  } else if (input === "createF;") {
+  } else if (input === "createF") {
     createFile();
   } else if (input === "deleteF;") {
     deleteFiledeleteFile("old-file.txt");
-  } else if (input === "quit;") {
+  } else if (input === "quit") {
     quit();
-  } else if (input === "cls;") {
+  } else if (input === "cls") {
     process.stdout.write("\x1b[2J");
   } else if (input === "type;") {
     type();
   } else if (input === "ren;") {
     renameFile(input("old-file.txt", "new-file.txt"));
-  } else if (input === "sysInfo;") {
+  } else if (input === "sysInfo") {
     sysinfo();
-  } else if (input === "dirTree;") {
+  } else if (input === "dirTree") {
     tree();
   } else {
-    console.log("Invalid command ;");
+    console.log("Invalid command");
   }
 });
 
 function help() {
   console.log(
-    "help; sysInfo; dirTree; cls; calculator; time; createF; deleteF; ren; type; ls; ls -a; quit;"
+    "help; sysInfo; dirTree; cls; calculator; time; createF; deleteF; ren; type; ls; ls -a; quit."
   );
 }
 
-function sysinfo() {
-  const os = require("os");
-  console.log(`
-    System Information
-    --------------------
-    OS Name: ${os.platform}
-    OS Version: ${os.release}
-    Hostname: ${os.hostname}
-    IP Address: ${os.networkInterfaces()[0].addresses[0].address}
-  `);
-}
-
-function tree(path) {
-  const os = require("os");
-  const fs = require("fs");
-
-  const dirs = [];
-  const files = [];
-
-  function recurse(dir) {
-    const entries = fs.readdirSync(dir);
-    entries.forEach((entry) => {
-      const path = `${dir}/${entry}`;
-      const stat = fs.statSync(path);
-
-      if (stat.isDirectory()) {
-        dirs.push(path);
-        recurse(path);
-      } else {
-        files.push(path);
-      }
-    });
-  }
-
-  recurse(path || ".");
-
-  const maxDepth = Math.max(...dirs.map((dir) => dir.split("/").length));
-
-  function printNode(node, depth) {
-    const padding = Array(depth + 1)
-      .fill("   ")
-      .join("");
-    console.log(`${padding}${node}`);
-
-    if (dirs.includes(node)) {
-      dirs.forEach((dir) => {
-        printNode(dir, depth + 1);
-      });
-    } else {
-      files.forEach((file) => {
-        console.log(`${padding}- ${file}`);
-      });
-    }
-  }
-
-  printNode(".", 0);
-}
+const sysInfo=cmd.run(
+	`nitch`
+);
 
 function calculator() {
   rl.question("Number One: ", (num1) => {
