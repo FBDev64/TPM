@@ -1,7 +1,8 @@
 #!/bin/bash
 
 input_file=$(gum input --placeholder "Input file name.xlsx")
+new_name=$(gum nput --placeholder "Input the desired new name, without extesion")
 
-xlsx2csv
-ssconvert file.xlsx file.csv
-libreoffice --headless --convert-to csv $input_file
+ssconvert $input_file $new_nme
+
+gum table <  $new_nme | cut -d ',' -f 1
